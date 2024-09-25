@@ -16,7 +16,7 @@ import ITarefa from '../interfaces/ITarefa';
 import Box from '../components/Box.vue';
 
 export default defineComponent({
-    name: 'App',
+    name: 'TarefasView',
     components: { Formulario, Tarefa, Box },
     data() {
         return {

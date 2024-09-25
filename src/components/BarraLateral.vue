@@ -3,11 +3,30 @@
         <h1>
             <img src="../assets/logo.png" alt="">
         </h1>
-        <Botao 
-        :texto="textoBotao"
-        :classe="'fa-solid fa-circle-half-stroke'"
-        :desabilitado="false"
-        @clicado="alterarTema"/>
+        <Botao :texto="textoBotao" :classe="'fa-solid fa-circle-half-stroke'" :desabilitado="false"
+            @clicado="alterarTema" />
+        <nav class="panel mt-5">
+            <ul>
+                <li>
+                    <router-link
+                    to="/"
+                    class="link"
+                    >
+                        <i class="fas fa-tasks"></i>
+                        tarefas
+                    </router-link>
+                </li>
+                <li>
+                    <router-link
+                    to="/projetos"
+                    class="link"
+                    >
+                        <i class="fas fa-project-diagram"></i>
+                        projetos
+                    </router-link>
+                </li>
+            </ul>
+        </nav>
     </header>
 </template>
 
@@ -24,7 +43,7 @@ export default defineComponent({
     name: 'BarraLateral',
     components: { Botao },
     computed: {
-        textoBotao () {
+        textoBotao() {
             if (this.modoEscuroAtivo) {
                 return 'Desativar modo escuro'
             }
@@ -32,12 +51,12 @@ export default defineComponent({
         }
     },
     methods: {
-        alterarTema () : void {
+        alterarTema(): void {
             this.modoEscuroAtivo = !this.modoEscuroAtivo
             this.$emit('aoTemaAlterado', this.modoEscuroAtivo)
         }
     },
-    emits: [ 'aoTemaAlterado']
+    emits: ['aoTemaAlterado']
 })
 </script>
 
@@ -48,6 +67,20 @@ header {
     width: 100%;
     height: 100vh;
     text-align: center;
+}
+
+.panel li {
+    text-align: start;
+    margin: 8px 0;
+}
+.link {
+    color: #fff;
+}
+.link:hover {
+    color: #FAF0CA;
+}
+.link.router-link-active {
+    color: #FAF0CA;
 }
 
 @media only screen and (max-width: 768px) {
