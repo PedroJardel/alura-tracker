@@ -5,7 +5,7 @@
       @ao-tema-alterado="trocarTema"/>
     </div>
     <div class="column is-three-quarter conteudo">
-      <router-view></router-view>
+      <RouterView></RouterView>
     </div>
   </main>
 </template>
