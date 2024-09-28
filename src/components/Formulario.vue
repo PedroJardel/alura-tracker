@@ -26,6 +26,8 @@ import { computed, defineComponent } from 'vue';
 import Temporizador from './Temporizador.vue';
 import { useStore } from 'vuex';
 import { key } from '@/store/store';
+import { NOTIFICAR } from '@/store/type-mutations';
+import { TypeNotification } from '@/interfaces/INotificacao';
 
 export default defineComponent({
     data() {
@@ -38,6 +40,16 @@ export default defineComponent({
     components: { Temporizador },
     methods: {
         finalizarTarefa(tempoDecorrido: number): void {
+            const projeto = this.projetos.find((proj) => proj.id === this.idProjeto)
+
+            if (!projeto) {
+                this.store.commit(NOTIFICAR, {
+                    titulo: 'Erro ao Salvar tarefa',
+                    texto: 'Você deve incluir a tarefa à um projeto existente',
+                    type: TypeNotification.FALHA
+                })
+                return
+            }
             this.$emit('aoSalvarTarefa', {
                 duracaoEmSegundos: tempoDecorrido,
                 descricao: this.descricao,
@@ -51,6 +63,7 @@ export default defineComponent({
         const store = useStore(key)
 
         return {
+            store,
             projetos: computed(() => store.state.projetos)
         }
     }

@@ -17,8 +17,9 @@
 </template>
 
 <script lang="ts">
+import { TypeNotification } from '@/interfaces/INotificacao';
 import { useStore } from '@/store/store';
-import { ADICIONA_PROJETO, ALTERA_PROJETO } from '@/store/type-mutations';
+import { ADICIONA_PROJETO, ALTERA_PROJETO, NOTIFICAR } from '@/store/type-mutations';
 import { defineComponent } from 'vue';
 
 export default defineComponent({
@@ -41,8 +42,18 @@ export default defineComponent({
         salvar(): void {
             if (this.id) {
                 this.store.commit(ALTERA_PROJETO, { id: this.id, nome: this.nomeDoProjeto })
+                this.store.commit(NOTIFICAR, {
+                titulo: this.nomeDoProjeto,
+                texto: 'Projeto alterado com sucesso! Seu projeto está disponível',
+                type: TypeNotification.SUCESSO
+            })
             } else {           
                 this.store.commit(ADICIONA_PROJETO, this.nomeDoProjeto)
+                this.store.commit(NOTIFICAR, {
+                titulo: this.nomeDoProjeto,
+                texto: 'Projeto adicionado com sucesso! Seu projeto está disponível',
+                type: TypeNotification.SUCESSO
+            })
             }
             this.nomeDoProjeto = '';
             this.$router.push('/projetos')

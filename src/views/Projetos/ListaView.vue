@@ -24,7 +24,7 @@
                                 <i class="fas fa-pencil-alt"></i>
                             </span>
                         </router-link>
-                        <button class="button ml-2 is-danger" @click="excluir(projeto.id)">
+                        <button class="button ml-2 is-danger" @click="excluir(projeto)">
                             <span class="icon is-small">
                                 <i class="fas fa-trash"></i>
                             </span>
@@ -37,15 +37,22 @@
 </template>
 
 <script lang="ts">
+import { TypeNotification } from '@/interfaces/INotificacao';
+import IProjeto from '@/interfaces/IProjeto';
 import { useStore } from '@/store/store';
-import { EXCLUIR_PROJETO } from '@/store/type-mutations';
+import { EXCLUIR_PROJETO, NOTIFICAR } from '@/store/type-mutations';
 import { computed, defineComponent } from 'vue';
 
 export default defineComponent({
     name: 'ProjetosView',
     methods: {
-        excluir (id: string) {
-            this.store.commit(EXCLUIR_PROJETO, id)
+        excluir (projeto: IProjeto) {
+            this.store.commit(EXCLUIR_PROJETO, projeto.id)
+            this.store.commit(NOTIFICAR, {
+                titulo: projeto.nome,
+                texto: 'Projeto excluído com sucesso',
+                type: TypeNotification.SUCESSO
+            })
         }
     },
     setup() {
