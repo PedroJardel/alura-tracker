@@ -26,7 +26,6 @@ import { computed, defineComponent } from 'vue';
 import Temporizador from './Temporizador.vue';
 import { useStore } from 'vuex';
 import { key } from '@/store/store';
-import { NOTIFICAR } from '@/store/type-mutations';
 import { TypeNotification } from '@/interfaces/INotificacao';
 import { notificacaoMixin } from '@/mixins/notificar';
 
