@@ -18,8 +18,9 @@
 
 <script lang="ts">
 import { TypeNotification } from '@/interfaces/INotificacao';
+import { notificacaoMixin } from '@/mixins/notificar';
 import { useStore } from '@/store/store';
-import { ADICIONA_PROJETO, ALTERA_PROJETO, NOTIFICAR } from '@/store/type-mutations';
+import { ADICIONA_PROJETO, ALTERA_PROJETO } from '@/store/type-mutations';
 import { defineComponent } from 'vue';
 
 export default defineComponent({
@@ -32,8 +33,9 @@ export default defineComponent({
     props: {
         id: { type: String }
     },
-    mounted () {
-        if(this.id) {
+    mixins: [notificacaoMixin],
+    mounted() {
+        if (this.id) {
             const projeto = this.store.state.projetos.find(proj => proj.id == this.id)
             this.nomeDoProjeto = projeto?.nome || ''
         }
@@ -42,24 +44,24 @@ export default defineComponent({
         salvar(): void {
             if (this.id) {
                 this.store.commit(ALTERA_PROJETO, { id: this.id, nome: this.nomeDoProjeto })
-                this.store.commit(NOTIFICAR, {
-                titulo: this.nomeDoProjeto,
-                texto: 'Projeto alterado com sucesso! Seu projeto está disponível',
-                type: TypeNotification.SUCESSO
-            })
-            } else {           
+                this.notificar(
+                    TypeNotification.SUCESSO,
+                    this.nomeDoProjeto,
+                    'Projeto alterado com sucesso! Seu projeto está disponível',
+                )
+            } else {
                 this.store.commit(ADICIONA_PROJETO, this.nomeDoProjeto)
-                this.store.commit(NOTIFICAR, {
-                titulo: this.nomeDoProjeto,
-                texto: 'Projeto adicionado com sucesso! Seu projeto está disponível',
-                type: TypeNotification.SUCESSO
-            })
+               this.notificar(
+                    TypeNotification.SUCESSO,
+                    this.nomeDoProjeto,
+                    'Projeto adicionado com sucesso! Seu projeto está disponível'
+                )
             }
             this.nomeDoProjeto = '';
             this.$router.push('/projetos')
         }
     },
-    setup () {
+    setup() {
         const store = useStore()
         return {
             store

@@ -28,6 +28,7 @@ import { useStore } from 'vuex';
 import { key } from '@/store/store';
 import { NOTIFICAR } from '@/store/type-mutations';
 import { TypeNotification } from '@/interfaces/INotificacao';
+import { notificacaoMixin } from '@/mixins/notificar';
 
 export default defineComponent({
     data() {
@@ -38,16 +39,17 @@ export default defineComponent({
     },
     name: 'FormularioPrincipal',
     components: { Temporizador },
+    mixins: [notificacaoMixin],
     methods: {
         finalizarTarefa(tempoDecorrido: number): void {
             const projeto = this.projetos.find((proj) => proj.id === this.idProjeto)
 
             if (!projeto) {
-                this.store.commit(NOTIFICAR, {
-                    titulo: 'Erro ao Salvar tarefa',
-                    texto: 'Você deve incluir a tarefa à um projeto existente',
-                    type: TypeNotification.FALHA
-                })
+                this.notificar(
+                    TypeNotification.FALHA,
+                    'Erro ao Salvar tarefa',
+                    'Você deve incluir a tarefa à um projeto existente'
+                )
                 return
             }
             this.$emit('aoSalvarTarefa', {

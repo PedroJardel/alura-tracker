@@ -39,20 +39,21 @@
 <script lang="ts">
 import { TypeNotification } from '@/interfaces/INotificacao';
 import IProjeto from '@/interfaces/IProjeto';
+import { notificacaoMixin } from '@/mixins/notificar';
 import { useStore } from '@/store/store';
-import { EXCLUIR_PROJETO, NOTIFICAR } from '@/store/type-mutations';
+import { EXCLUIR_PROJETO } from '@/store/type-mutations';
 import { computed, defineComponent } from 'vue';
 
 export default defineComponent({
     name: 'ProjetosView',
+    mixins: [notificacaoMixin],
     methods: {
-        excluir (projeto: IProjeto) {
+        excluir(projeto: IProjeto) {
             this.store.commit(EXCLUIR_PROJETO, projeto.id)
-            this.store.commit(NOTIFICAR, {
-                titulo: projeto.nome,
-                texto: 'Projeto excluído com sucesso',
-                type: TypeNotification.SUCESSO
-            })
+            this.notificar(TypeNotification.SUCESSO,
+                projeto.nome,
+                'Projeto excluído com sucesso'
+            )
         }
     },
     setup() {
