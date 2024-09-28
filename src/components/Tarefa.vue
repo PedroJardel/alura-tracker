@@ -1,8 +1,11 @@
 <template>
     <Box>
         <div class="columns is-flex is-align-items-center is-justify-content-space-between">
-            <div class="column is-7 is-flex is-justify-content-start has-text-primary">
+            <div class="column is-4 is-flex is-justify-content-start has-text-primary">
                 {{ tarefa.descricao || `Tarefa ${indexadorTarefa+1}` }}
+            </div>
+            <div class="column is-3">
+                {{ tarefa.projeto?.nome || 'N/D' }}
             </div>
             <div class="column is-flex is-justify-content-end cronometro">
                 <span>Tempo gasto: </span> <Cronometro :tempoEmSegundos="tarefa.duracaoEmSegundos" />
