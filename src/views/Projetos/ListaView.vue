@@ -41,6 +41,7 @@ import { TypeNotification } from '@/interfaces/INotificacao';
 import IProjeto from '@/interfaces/IProjeto';
 import { notificacaoMixin } from '@/mixins/notificar';
 import { useStore } from '@/store/store';
+import { OBTER_PROJETOS } from '@/store/type-actions';
 import { EXCLUIR_PROJETO } from '@/store/type-mutations';
 import { computed, defineComponent } from 'vue';
 
@@ -58,6 +59,7 @@ export default defineComponent({
     },
     setup() {
         const store = useStore()
+        store.dispatch(OBTER_PROJETOS)
         return {
             projetos: computed(() => store.state.projetos),
             store
