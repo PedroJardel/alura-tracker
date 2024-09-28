@@ -19,9 +19,9 @@
 <script lang="ts">
 import { TypeNotification } from '@/interfaces/INotificacao';
 import { useStore } from '@/store/store';
-import { ADICIONA_PROJETO, ALTERA_PROJETO } from '@/store/type-mutations';
 import { defineComponent } from 'vue';
-import useNotificador  from '@/hooks/notificador'
+import useNotificador from '@/hooks/notificador'
+import { ALTERAR_PROJETOS, CADASTAR_PROJETOS } from '@/store/type-actions';
 
 export default defineComponent({
     name: 'FormularioProjetosView',
@@ -42,20 +42,22 @@ export default defineComponent({
     methods: {
         salvar(): void {
             if (this.id) {
-                this.store.commit(ALTERA_PROJETO, { id: this.id, nome: this.nomeDoProjeto })
-                this.notificar(
-                    TypeNotification.SUCESSO,
-                    this.nomeDoProjeto,
-                    'Projeto alterado com sucesso! Seu projeto está disponível',
-                )
+                this.store.dispatch(ALTERAR_PROJETOS, {
+                    id: this.id,
+                    nome: this.nomeDoProjeto
+                }).then(() => this.lidarComSucesso())
             } else {
-                this.store.commit(ADICIONA_PROJETO, this.nomeDoProjeto)
-               this.notificar(
-                    TypeNotification.SUCESSO,
-                    this.nomeDoProjeto,
-                    'Projeto adicionado com sucesso! Seu projeto está disponível'
-                )
+                this.store.dispatch(CADASTAR_PROJETOS, this.nomeDoProjeto)
+                    .then(() => this.lidarComSucesso())
             }
+
+        },
+        lidarComSucesso() {
+            this.notificar(
+                TypeNotification.SUCESSO,
+                this.nomeDoProjeto,
+                'Projeto adicionado com sucesso! Seu projeto está disponível'
+            )
             this.nomeDoProjeto = '';
             this.$router.push('/projetos')
         }

@@ -3,7 +3,7 @@ import { InjectionKey } from "vue";
 import { createStore, Store, useStore as vuexUseStore } from "vuex";
 import { ADICIONA_PROJETO, ALTERA_PROJETO, DEFINIR_PROJETO, EXCLUIR_PROJETO, NOTIFICAR } from "./type-mutations";
 import INotificacao from "@/interfaces/INotificacao";
-import { OBTER_PROJETOS } from "./type-actions";
+import { ALTERAR_PROJETOS, CADASTAR_PROJETOS, OBTER_PROJETOS, REMOVER_PROJETOS } from "./type-actions";
 import server from '@/server/server'
 
 interface Estado {
@@ -49,7 +49,19 @@ export const store = createStore<Estado>({
         [OBTER_PROJETOS] ({ commit }) {
             server.get('projetos')
             .then(response => commit(DEFINIR_PROJETO, response.data))
-        }
+        },
+        [CADASTAR_PROJETOS] (contexto, nomeDoProjeto: string ) {
+           return server.post('projetos', {
+                nome: nomeDoProjeto
+            })
+        },
+        [ALTERAR_PROJETOS] (contexto, projeto: IProjeto) {
+           return server.put(`projetos/${projeto.id}`, projeto)
+        },
+        [REMOVER_PROJETOS] ({ commit }, id: string) {
+           return server.delete(`projetos/${id}`)
+           .then(() => commit(EXCLUIR_PROJETO, id))
+        },
     }
 })
 
