@@ -15,7 +15,7 @@
   ],
   "tarefas": [
     {
-      "id": 1,
+      "id": "1",
       "duracaoEmSegundos": 120,
       "descricao": "Configuração do Ambiente",
       "projeto": {
@@ -26,7 +26,7 @@
     {
       "id": "e7de",
       "duracaoEmSegundos": 5,
-      "descricao": "Refatoração do Vuex",
+      "descricao": "Refatoração Vue",
       "projeto": {
         "id": "cefc",
         "nome": "Plano de Estudos Vue.Js"

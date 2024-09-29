@@ -1,25 +1,31 @@
 <template>
     <Formulario @aoSalvarTarefa="salvarTarefa" />
     <div v-if="tarefas.length" class="lista">
-        <Tarefa v-for="(tarefa, index) in tarefas" :key="index" :tarefa="tarefa" :indexadorTarefa="index" />
+        <Tarefa v-for="(tarefa, index) in tarefas" :key="index" :tarefa="tarefa" :indexadorTarefa="index"
+            @ao-tarefa-clicada="selecionarTarefa" />
     </div>
     <Box v-else class="lista-vazia">
         <h1><strong>Sua Lista de tarefas está vazia. Crie uma tarefa</strong></h1>
     </Box>
-    <div class="modal">
+    <div class="modal" :class="{ 'is-active': tarefaSelecionada }" v-if="tarefaSelecionada">
         <div class="modal-background"></div>
         <div class="modal-card">
             <header class="modal-card-head">
-                <p class="modal-card-title">Modal title</p>
-                <button class="delete" aria-label="close"></button>
+                <p class="modal-card-title">Editar</p>
+                <button class="delete" aria-label="close" @click="fecharModal"></button>
             </header>
             <section class="modal-card-body">
-                <!-- Content ... -->
+                <div class="field">
+                    <label for="descricaoDaTarefa" class="label">
+                        Descrição
+                    </label>
+                    <input type="text" class="input" v-model="tarefaSelecionada.descricao" id="nomeDoProjeto">
+                </div>
             </section>
             <footer class="modal-card-foot">
                 <div class="buttons">
-                    <button class="button is-success">Save changes</button>
-                    <button class="button">Cancel</button>
+                    <button class="button is-success" @click="alterarTarefa">Save changes</button>
+                    <button class="button" @click="fecharModal">Cancel</button>
                 </div>
             </footer>
         </div>
@@ -32,15 +38,30 @@ import Formulario from '../components/Formulario.vue'
 import Tarefa from '../components/Tarefa.vue';
 import Box from '../components/Box.vue';
 import { useStore } from '@/store/store';
-import { CADASTAR_TAREFA, OBTER_PROJETOS, OBTER_TAREFAS } from '@/store/type-actions';
+import { ALTERAR_PROJETO, ALTERAR_TAREFA, CADASTAR_TAREFA, OBTER_PROJETOS, OBTER_TAREFAS } from '@/store/type-actions';
 import ITarefa from '@/interfaces/ITarefa';
 
 export default defineComponent({
     name: 'TarefasView',
+    data() {
+        return {
+            tarefaSelecionada: null as ITarefa | null
+        }
+    },
     components: { Formulario, Tarefa, Box },
     methods: {
         salvarTarefa(tarefa: ITarefa): void {
             this.store.dispatch(CADASTAR_TAREFA, tarefa)
+        },
+        selecionarTarefa(tarefa: ITarefa) {
+            this.tarefaSelecionada = tarefa
+        },
+        fecharModal() {
+            this.tarefaSelecionada = null
+        },
+        alterarTarefa () {
+            this.store.dispatch(ALTERAR_TAREFA, this.tarefaSelecionada)
+            .then(() => this.fecharModal())
         }
     },
     setup() {

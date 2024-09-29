@@ -1,5 +1,5 @@
 <template>
-    <Box>
+    <Box @click="tarefaClicada">
         <div class="columns is-flex is-align-items-center is-justify-content-space-between">
             <div class="column is-4 is-flex is-justify-content-start has-text-primary">
                 {{ tarefa.descricao || `Tarefa ${indexadorTarefa + 1}` }}
@@ -22,11 +22,17 @@ import Box from './Box.vue';
 import ITarefa from '@/interfaces/ITarefa';
 
 export default defineComponent({
+    name: 'TarefaLista',
     props: {
         tarefa: { type: Object as PropType<ITarefa>, required: true },
         indexadorTarefa: { type: Number, default: 0 }
     },
-    name: 'TarefaLista',
+    emits: ['aoTarefaClicada'],
+    methods: {
+        tarefaClicada() : void {
+            this.$emit('aoTarefaClicada', this.tarefa)
+        }
+    },
     components: { Cronometro, Box },
 })
 

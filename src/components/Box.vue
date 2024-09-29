@@ -12,3 +12,9 @@ export default defineComponent({
 })
 
 </script>
+
+<style>
+    .box {
+        cursor: pointer;
+    }
+</style>
