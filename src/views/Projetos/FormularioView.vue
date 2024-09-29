@@ -21,7 +21,7 @@ import { TypeNotification } from '@/interfaces/INotificacao';
 import { useStore } from '@/store/store';
 import { defineComponent } from 'vue';
 import useNotificador from '@/hooks/notificador'
-import { ALTERAR_PROJETOS, CADASTAR_PROJETOS } from '@/store/type-actions';
+import { ALTERAR_PROJETO, CADASTAR_PROJETO } from '@/store/type-actions';
 
 export default defineComponent({
     name: 'FormularioProjetosView',
@@ -42,12 +42,12 @@ export default defineComponent({
     methods: {
         salvar(): void {
             if (this.id) {
-                this.store.dispatch(ALTERAR_PROJETOS, {
+                this.store.dispatch(ALTERAR_PROJETO, {
                     id: this.id,
                     nome: this.nomeDoProjeto
                 }).then(() => this.lidarComSucesso())
             } else {
-                this.store.dispatch(CADASTAR_PROJETOS, this.nomeDoProjeto)
+                this.store.dispatch(CADASTAR_PROJETO, this.nomeDoProjeto)
                     .then(() => this.lidarComSucesso())
             }
 

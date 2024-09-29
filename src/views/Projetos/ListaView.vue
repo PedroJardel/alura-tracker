@@ -41,7 +41,7 @@ import { TypeNotification } from '@/interfaces/INotificacao';
 import IProjeto from '@/interfaces/IProjeto';
 import { notificacaoMixin } from '@/mixins/notificar';
 import { useStore } from '@/store/store';
-import { OBTER_PROJETOS, REMOVER_PROJETOS } from '@/store/type-actions';
+import { OBTER_PROJETOS, REMOVER_PROJETO } from '@/store/type-actions';
 import { computed, defineComponent } from 'vue';
 
 export default defineComponent({
@@ -49,7 +49,7 @@ export default defineComponent({
     mixins: [notificacaoMixin],
     methods: {
         excluir(projeto: IProjeto) {
-            this.store.dispatch(REMOVER_PROJETOS, projeto.id)
+            this.store.dispatch(REMOVER_PROJETO, projeto.id)
             this.notificar(TypeNotification.SUCESSO,
                 projeto.nome,
                 'Projeto excluído com sucesso'

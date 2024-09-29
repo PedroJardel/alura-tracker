@@ -2,11 +2,35 @@
   "projetos": [
     {
       "id": "cefc",
-      "nome": "Plano de Estudos"
+      "nome": "Plano de Estudos Vue.Js"
     },
     {
       "id": "51e4",
       "nome": "Alura Tracker 3.0"
+    },
+    {
+      "id": "8744",
+      "nome": "Plano de Estudos TypeScript"
+    }
+  ],
+  "tarefas": [
+    {
+      "id": 1,
+      "duracaoEmSegundos": 120,
+      "descricao": "Configuração do Ambiente",
+      "projeto": {
+        "id": "51e4",
+        "nome": "Alura Tracker 3.0"
+      }
+    },
+    {
+      "id": "e7de",
+      "duracaoEmSegundos": 5,
+      "descricao": "Refatoração do Vuex",
+      "projeto": {
+        "id": "cefc",
+        "nome": "Plano de Estudos Vue.Js"
+      }
     }
   ]
 }
