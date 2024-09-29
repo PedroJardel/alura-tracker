@@ -38,7 +38,7 @@ import Formulario from '../components/Formulario.vue'
 import Tarefa from '../components/Tarefa.vue';
 import Box from '../components/Box.vue';
 import { useStore } from '@/store/store';
-import { ALTERAR_PROJETO, ALTERAR_TAREFA, CADASTAR_TAREFA, OBTER_PROJETOS, OBTER_TAREFAS } from '@/store/type-actions';
+import { ALTERAR_TAREFA, CADASTAR_TAREFA, OBTER_PROJETOS, OBTER_TAREFAS } from '@/store/type-actions';
 import ITarefa from '@/interfaces/ITarefa';
 
 export default defineComponent({
@@ -69,7 +69,7 @@ export default defineComponent({
         store.dispatch(OBTER_TAREFAS)
         store.dispatch(OBTER_PROJETOS)
         return {
-            tarefas: computed(() => store.state.tarefas),
+            tarefas: computed(() => store.state.tarefa.tarefas),
             store
         }
     }
