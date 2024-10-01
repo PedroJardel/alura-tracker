@@ -1,6 +1,15 @@
 <template>
     <Formulario @aoSalvarTarefa="salvarTarefa" />
+    <div class="field">
+            <p class="control has-icons-left has-icons-right">
+                <input class="input" type="email" placeholder="Digite para filtrar" v-model="filtro">
+                <span class="icon is-small is-left">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </span>
+            </p>
+        </div>
     <div v-if="tarefas.length" class="lista">
+
         <Tarefa v-for="(tarefa, index) in tarefas" :key="index" :tarefa="tarefa" :indexadorTarefa="index"
             @ao-tarefa-clicada="selecionarTarefa" />
     </div>
@@ -33,7 +42,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from 'vue';
+import { computed, defineComponent, ref } from 'vue';
 import Formulario from '../components/Formulario.vue'
 import Tarefa from '../components/Tarefa.vue';
 import Box from '../components/Box.vue';
@@ -59,19 +68,37 @@ export default defineComponent({
         fecharModal() {
             this.tarefaSelecionada = null
         },
-        alterarTarefa () {
+        alterarTarefa() {
             this.store.dispatch(ALTERAR_TAREFA, this.tarefaSelecionada)
-            .then(() => this.fecharModal())
+                .then(() => this.fecharModal())
         }
     },
     setup() {
         const store = useStore()
         store.dispatch(OBTER_TAREFAS)
         store.dispatch(OBTER_PROJETOS)
+        const filtro = ref('')
+        const tarefas = computed(() => store.state.tarefa.tarefas.filter((tarefaFiltrada) => !filtro.value || tarefaFiltrada.descricao.includes(filtro.value)))
+
         return {
-            tarefas: computed(() => store.state.tarefa.tarefas),
-            store
+            tarefas,
+            store,
+            filtro
         }
     }
 });
 </script>
+
+<style scoped>
+.control {
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    gap: 1rem;
+}
+.button {
+    box-sizing: border-box;
+    background: var(--bulma-text);
+    color: white;
+}
+</style>
