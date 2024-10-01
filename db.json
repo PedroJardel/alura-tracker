@@ -11,6 +11,10 @@
     {
       "id": "8744",
       "nome": "Plano de Estudos TypeScript"
+    },
+    {
+      "id": "5199",
+      "nome": "Estudar Padrões de Arquitetura"
     }
   ],
   "tarefas": [
@@ -27,6 +31,33 @@
       "id": "e7de",
       "duracaoEmSegundos": 5,
       "descricao": "Refatoração Vue",
+      "projeto": {
+        "id": "cefc",
+        "nome": "Plano de Estudos Vue.Js"
+      }
+    },
+    {
+      "id": "58ff",
+      "duracaoEmSegundos": 7,
+      "descricao": "Teste",
+      "projeto": {
+        "id": "5199",
+        "nome": "Estudar Padrões de Arquitetura"
+      }
+    },
+    {
+      "id": "64a3",
+      "duracaoEmSegundos": 4,
+      "descricao": "Top demenos",
+      "projeto": {
+        "id": "cefc",
+        "nome": "Plano de Estudos Vue.Js"
+      }
+    },
+    {
+      "id": "bef2",
+      "duracaoEmSegundos": 4,
+      "descricao": "Tarefa Teste",
       "projeto": {
         "id": "cefc",
         "nome": "Plano de Estudos Vue.Js"

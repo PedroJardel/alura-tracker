@@ -18,7 +18,7 @@ import { useStore } from '@/store/store';
 import { computed, defineComponent } from 'vue';
 
 export default defineComponent({
-    name: 'NotificacoesAlura',
+    name: 'NotificacoesAluraTracker',
     data() {
         return {
             contexto: {

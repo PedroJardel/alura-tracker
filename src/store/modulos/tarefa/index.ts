@@ -1,9 +1,8 @@
-import INotificacao from "@/interfaces/INotificacao";
 import ITarefa from "@/interfaces/ITarefa";
 import server from "@/server/server";
 import { Estado } from "@/store/store";
 import { OBTER_TAREFAS, CADASTAR_TAREFA, ALTERAR_TAREFA, REMOVER_TAREFA } from "@/store/type-actions";
-import { ADICIONA_TAREFA, ALTERA_TAREFA, DEFINIR_TAREFA, EXCLUIR_PROJETO, NOTIFICAR } from "@/store/type-mutations";
+import { ADICIONA_TAREFA, ALTERA_TAREFA, DEFINIR_TAREFA, EXCLUIR_PROJETO } from "@/store/type-mutations";
 import { Module } from "vuex";
 
 export interface EstadoTarefa {

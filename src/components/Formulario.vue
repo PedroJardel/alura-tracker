@@ -22,50 +22,51 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from 'vue';
+import { computed, defineComponent, ref } from 'vue';
 import Temporizador from './Temporizador.vue';
 import { useStore } from 'vuex';
 import { key } from '@/store/store';
 import { TypeNotification } from '@/interfaces/INotificacao';
-import { notificacaoMixin } from '@/mixins/notificar';
+import useNotificador from '@/hooks/notificador';
 
 export default defineComponent({
-    data() {
-        return {
-            descricao: '',
-            idProjeto: ''
-        }
-    },
     name: 'FormularioPrincipal',
     components: { Temporizador },
-    mixins: [notificacaoMixin],
-    methods: {
-        finalizarTarefa(tempoDecorrido: number): void {
-            const projeto = this.projetos.find((proj) => proj.id === this.idProjeto)
+    emits: ['aoSalvarTarefa'],
+    setup(props, { emit }) {
+
+        const store = useStore(key)
+        const descricao = ref("");
+        const idProjeto = ref("")
+        const projetos = computed(() => store.state.projeto.projetos)
+        const { notificar } = useNotificador()
+
+        const finalizarTarefa = (tempoDecorrido: number) => {
+            const projeto = projetos.value.find((proj) => proj.id === idProjeto.value)
 
             if (!projeto) {
-                this.notificar(
+                notificar (
                     TypeNotification.FALHA,
                     'Erro ao Salvar tarefa',
                     'Você deve incluir a tarefa à um projeto existente'
                 )
                 return
             }
-            this.$emit('aoSalvarTarefa', {
+
+            emit('aoSalvarTarefa', {
                 duracaoEmSegundos: tempoDecorrido,
-                descricao: this.descricao,
-                projeto: this.projetos.find(proj => proj.id == this.idProjeto)
+                descricao: descricao.value,
+                projeto: projetos.value.find(proj => proj.id == idProjeto.value)
             })
-            this.descricao = ''
+            descricao.value = ''
         }
-    },
-    emits: ['aoSalvarTarefa'],
-    setup() {
-        const store = useStore(key)
 
         return {
-            store,
-            projetos: computed(() => store.state.projeto.projetos)
+            descricao,
+            idProjeto,
+            projetos,
+            finalizarTarefa
+
         }
     }
 })

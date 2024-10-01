@@ -24,8 +24,8 @@
             </section>
             <footer class="modal-card-foot">
                 <div class="buttons">
-                    <button class="button is-success" @click="alterarTarefa">Save changes</button>
-                    <button class="button" @click="fecharModal">Cancel</button>
+                    <button class="button is-success" @click="alterarTarefa">Salvar</button>
+                    <button class="button" @click="fecharModal">Cancelar</button>
                 </div>
             </footer>
         </div>

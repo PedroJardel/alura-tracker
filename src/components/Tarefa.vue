@@ -23,17 +23,28 @@ import ITarefa from '@/interfaces/ITarefa';
 
 export default defineComponent({
     name: 'TarefaLista',
+    components: { Cronometro, Box },
     props: {
         tarefa: { type: Object as PropType<ITarefa>, required: true },
         indexadorTarefa: { type: Number, default: 0 }
     },
     emits: ['aoTarefaClicada'],
-    methods: {
-        tarefaClicada() : void {
-            this.$emit('aoTarefaClicada', this.tarefa)
+    setup(props, { emit }) {
+        const tarefaClicada = () => {
+            emit('aoTarefaClicada', props.tarefa)
         }
-    },
-    components: { Cronometro, Box },
+
+        const tempoGasto = () : string => {
+            return new Date(props.tarefa.duracaoEmSegundos*1000)
+            .toISOString()
+            .substring(11,8)
+        }
+
+        return {
+            tarefaClicada,
+            tempoGasto
+        }
+    }
 })
 
 </script>
